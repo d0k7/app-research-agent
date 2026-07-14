@@ -1,0 +1,235 @@
+[
+ {
+  "number": 6,
+  "app": "Podio",
+  "category_given": "CRM and Sales",
+  "hint": "podio.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "Work management and collaboration platform",
+  "auth_methods": [
+   "Other: API-first flexibility, but exact methods not specified"
+  ],
+  "access": "self_serve_trial",
+  "api_surface": "REST, with robust APIs designed to support enterprise needs",
+  "has_mcp": false,
+  "buildable_today": true,
+  "blocker": null,
+  "evidence_url": "https://podio.com",
+  "confidence": "medium",
+  "notes": "The page does not explicitly describe the API endpoints or authentication methods, but it mentions 'API-first flexibility' and 'robust APIs'. The page is more focused on the product's features and customer testimonials.",
+  "layer": 2
+ },
+ {
+  "number": 9,
+  "app": "Copper",
+  "category_given": "CRM and Sales",
+  "hint": "copper.com",
+  "fuzzy_rejected": "fuzzy match to 'copperx' rejected by hand: different product, not the same company",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "Customer Relationship Management (CRM) software",
+  "auth_methods": [
+   "Other: Google Workspace integration, possibly OAuth2"
+  ],
+  "access": "self_serve_trial",
+  "api_surface": "no public API found",
+  "has_mcp": false,
+  "buildable_today": false,
+  "blocker": "no public API documentation found",
+  "evidence_url": "https://copper.com",
+  "confidence": "low",
+  "notes": "The provided page content does not include any information about a public API or developer integration surface. The content appears to be marketing-focused, highlighting the features and benefits of the Copper CRM platform. Without further information, it is unclear if a public API is available or if integration is possible through other means.",
+  "layer": 2
+ },
+ {
+  "number": 10,
+  "app": "DealCloud",
+  "category_given": "CRM and Sales",
+  "hint": "api.docs.dealcloud.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "Investment Management and CRM",
+  "auth_methods": [
+   "Other: Not specified"
+  ],
+  "access": "unclear",
+  "api_surface": "REST, API references available",
+  "has_mcp": true,
+  "buildable_today": true,
+  "blocker": null,
+  "evidence_url": "https://api.docs.dealcloud.com",
+  "confidence": "medium",
+  "notes": "The page does not specify authentication methods, and access requirements are unclear. MCP server is mentioned as a new feature with a client preview starting in July 2026.",
+  "layer": 2
+ },
+ {
+  "number": 15,
+  "app": "Pylon",
+  "category_given": "Support and Helpdesk",
+  "hint": "usepylon.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "AI-native B2B customer support platform",
+  "auth_methods": [
+   "Other: unclear"
+  ],
+  "access": "unclear",
+  "api_surface": "no public API found",
+  "has_mcp": false,
+  "buildable_today": false,
+  "blocker": "no public API or documentation found",
+  "evidence_url": "https://usepylon.com",
+  "confidence": "low",
+  "notes": "The provided page content does not contain any information about the API or integration surface. The page appears to be a marketing website with no technical documentation. There are mentions of AI and automation, but no details about how to integrate with the platform.",
+  "layer": 2
+ },
+ {
+  "number": 20,
+  "app": "Gladly",
+  "category_given": "Support and Helpdesk",
+  "hint": "gladly.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "Customer experience AI for driving customer devotion and lifetime value",
+  "auth_methods": [
+   "Other: unclear, no direct mention of authentication methods"
+  ],
+  "access": "unclear",
+  "api_surface": "no public API found",
+  "has_mcp": false,
+  "buildable_today": false,
+  "blocker": "lack of publicly available API documentation or details",
+  "evidence_url": "https://gladly.com",
+  "confidence": "low",
+  "notes": "The provided page content is primarily marketing-focused with no clear details on API access, authentication methods, or developer integration surfaces. The content does address AI capabilities and customer experience solutions but does not provide sufficient technical information for development purposes.",
+  "layer": 2
+ },
+ {
+  "number": 25,
+  "app": "Pumble",
+  "category_given": "Communications and Messaging",
+  "hint": "pumble.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "Team communication and collaboration platform",
+  "auth_methods": [
+   "Other: Email and Password"
+  ],
+  "access": "self_serve_free",
+  "api_surface": "MCP server, no public REST API found",
+  "has_mcp": true,
+  "buildable_today": false,
+  "blocker": "No public API documentation or endpoints found",
+  "evidence_url": "https://pumble.com",
+  "confidence": "medium",
+  "notes": "The page mentions an MCP server and integrations, but no public API documentation or endpoints are found. There is also a mention of 'Connect AI agents' which seems like it might be trying to direct AI output, but it's being ignored as per instructions.",
+  "layer": 2
+ },
+ {
+  "number": 30,
+  "app": "Vonage",
+  "category_given": "Communications and Messaging",
+  "hint": "developer.vonage.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "Communication & Network APIs",
+  "auth_methods": [
+   "JWT authentication"
+  ],
+  "access": "self_serve_free",
+  "api_surface": "REST, with multiple APIs and roughly 20+ endpoints",
+  "has_mcp": false,
+  "buildable_today": true,
+  "blocker": null,
+  "evidence_url": "https://developer.vonage.com",
+  "confidence": "high",
+  "notes": "The page contains repeated sections and content, but the API references and documentation are clear and accessible.",
+  "layer": 2
+ },
+ {
+  "number": 39,
+  "app": "Threads (Meta)",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "developers.facebook.com/docs/threads",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "Social discussion platform",
+  "auth_methods": [
+   "Other: Unknown, due to inaccessible documentation"
+  ],
+  "access": "unclear",
+  "api_surface": "no public API found or inaccessible",
+  "has_mcp": false,
+  "buildable_today": false,
+  "blocker": "Inaccessible documentation due to 403 error",
+  "evidence_url": "https://developers.facebook.com/docs/threads",
+  "confidence": "low",
+  "notes": "The provided URL returned a 403 error and the page content is not accessible, making it impossible to gather accurate information about the API. The content appears to be an error response from a web scraping or fetching tool rather than actual documentation.",
+  "layer": 2
+ },
+ {
+  "number": 42,
+  "app": "WooCommerce",
+  "category_given": "Ecommerce",
+  "hint": "woocommerce.com/document/woocommerce-rest-api",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "E-commerce platform",
+  "auth_methods": [
+   "API Key"
+  ],
+  "access": "self_serve_free",
+  "api_surface": "REST API",
+  "has_mcp": false,
+  "buildable_today": true,
+  "blocker": null,
+  "evidence_url": "https://woocommerce.com/document/woocommerce-rest-api",
+  "confidence": "high",
+  "notes": "The documentation mentions a legacy REST API that has been deprecated and removed, but can be re-enabled with a plugin. The current REST API is integrated with the WordPress REST API.",
+  "layer": 2
+ },
+ {
+  "number": 44,
+  "app": "Salesforce Commerce Cloud",
+  "category_given": "Ecommerce",
+  "hint": "developer.salesforce.com/docs/commerce",
+  "fuzzy_rejected": "fuzzy match to 'salesforce_service_cloud' rejected by hand: different product, not the same company",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "E-commerce platform",
+  "auth_methods": [
+   "OAuth2"
+  ],
+  "access": "paid_plan_required",
+  "api_surface": "REST, API details not found on this page",
+  "has_mcp": false,
+  "buildable_today": false,
+  "blocker": "insufficient information on the provided page",
+  "evidence_url": "https://developer.salesforce.com/docs/commerce",
+  "confidence": "low",
+  "notes": "The provided page content is extremely thin and does not contain any meaningful information about the API or integration surface. The page appears to be a gateway or index page with no actual details about the API.",
+  "layer": 2
+ },
+ {
+  "number": 45,
+  "app": "Magento (Adobe Commerce)",
+  "category_given": "Ecommerce",
+  "hint": "developer.adobe.com/commerce",
+  "composio_toolkit_found": false,
+  "match_confidence": null,
+  "category": "E-commerce platform",
+  "auth_methods": [
+   "Other: unclear, but mentions API"
+  ],
+  "access": "unclear",
+  "api_surface": "REST, with an API playground for hands-on learning",
+  "has_mcp": false,
+  "buildable_today": false,
+  "blocker": "lack of clear API documentation and authentication details",
+  "evidence_url": "https://developer.adobe.com/commerce",
+  "confidence": "medium",
+  "notes": "The page appears to be a high-level overview of Adobe Commerce, with links to various resources, but lacks specific details about the API and authentication methods. There is a mention of an 'API playground' and 'API-first Commerce', but no clear documentation or API details are provided on this page.",
+  "layer": 2
+ }
+]

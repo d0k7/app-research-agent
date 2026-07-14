@@ -1,0 +1,92 @@
+[
+ {
+  "number": 47,
+  "app": "Ecwid",
+  "hint": "api-docs.ecwid.com"
+ },
+ {
+  "number": 49,
+  "app": "Amazon Selling Partner",
+  "hint": "developer-docs.amazon.com/sp-api"
+ },
+ {
+  "number": 50,
+  "app": "fanbasis",
+  "hint": "fanbasis.com"
+ },
+ {
+  "number": 52,
+  "app": "SE Ranking",
+  "hint": "seranking.com/api"
+ },
+ {
+  "number": 54,
+  "app": "MrScraper",
+  "hint": "docs.mrscraper.com"
+ },
+ {
+  "number": 58,
+  "app": "Sherlock",
+  "hint": "github.com/sherlock-project/sherlock"
+ },
+ {
+  "number": 59,
+  "app": "Waterfall.io",
+  "hint": "waterfall.io (contact/company intel)"
+ },
+ {
+  "number": 68,
+  "app": "MongoDB Atlas",
+  "hint": "mongodb.com/docs/atlas/api"
+ },
+ {
+  "number": 79,
+  "app": "Smartsheet",
+  "hint": "smartsheet.com/developers"
+ },
+ {
+  "number": 83,
+  "app": "Binance",
+  "hint": "binance-docs.github.io"
+ },
+ {
+  "number": 84,
+  "app": "Paygent Connect",
+  "hint": "paygent (NMI-powered)"
+ },
+ {
+  "number": 85,
+  "app": "iPayX",
+  "hint": "ipayx.ai/docs"
+ },
+ {
+  "number": 90,
+  "app": "PitchBook",
+  "hint": "pitchbook.com (research API)"
+ },
+ {
+  "number": 92,
+  "app": "Otter AI",
+  "hint": "help.otter.ai (MCP server)"
+ },
+ {
+  "number": 94,
+  "app": "Consensus",
+  "hint": "consensus.app (OAuth requested)"
+ },
+ {
+  "number": 96,
+  "app": "Devin",
+  "hint": "docs.devin.ai (MCP)"
+ },
+ {
+  "number": 98,
+  "app": "Mermaid CLI",
+  "hint": "github.com/mermaid-js/mermaid-cli"
+ },
+ {
+  "number": 99,
+  "app": "YouTube Transcript",
+  "hint": "transcriptapi.com"
+ }
+]

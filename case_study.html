@@ -1,0 +1,1577 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Composio 100-App Research Agent Case Study</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #5f6b7a;
+      --line: #d9dee7;
+      --blue: #1d4ed8;
+      --green: #0f766e;
+      --amber: #b45309;
+      --red: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 22px; }
+    h1 { font-size: clamp(28px, 4vw, 48px); line-height: 1.02; margin: 0 0 12px; letter-spacing: 0; }
+    h2 { font-size: 22px; margin: 30px 0 12px; }
+    h3 { font-size: 16px; margin: 0 0 8px; }
+    p { color: var(--muted); margin: 0 0 12px; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .headline { max-width: 900px; font-size: 17px; color: #2b3542; }
+    .grid { display: grid; gap: 12px; }
+    .metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 20px 0; }
+    .card, .mini-card, .note {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric b { display: block; font-size: 30px; line-height: 1; margin-bottom: 6px; }
+    .metric span, .mini-card span, td span { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .two { grid-template-columns: 1fr 1fr; }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card b { display: block; margin-bottom: 4px; }
+    .bar-row { display: grid; grid-template-columns: 150px 1fr 42px; gap: 10px; align-items: center; margin: 8px 0; }
+    .bar-label { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-track { height: 10px; background: #edf1f6; border-radius: 999px; overflow: hidden; }
+    .bar-track span { display: block; height: 100%; background: var(--blue); }
+    .bar-value { text-align: right; color: var(--muted); }
+    .callout { border-left: 4px solid var(--amber); background: #fff8ed; padding: 12px 14px; border-radius: 6px; }
+    .pill { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; margin: 2px 4px 2px 0; color: #334155; background: #fff; }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { border-bottom: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
+    th { position: sticky; top: 0; background: #eef2f7; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #475569; }
+    td { font-size: 13px; }
+    tr:last-child td { border-bottom: 0; }
+    .table-wrap { max-height: 720px; overflow: auto; border-radius: 8px; }
+    .small { font-size: 12px; color: var(--muted); }
+    @media (max-width: 900px) {
+      .metrics, .two, .three { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 120px 1fr 34px; }
+      main { padding: 22px 14px 40px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="small">AI Product Ops Intern take-home · Composio app research automation</p>
+    <h1>Most requested integrations are already agent-callable; the remaining gap is gated or poorly documented long-tail apps.</h1>
+    <p class="headline">The pipeline resolved 100/100 apps: 71 through Composio's existing toolkit catalog, 11 through a Composio-search + Groq extraction agent, and 18 through targeted manual verification of failed rows. 0 rows remain unresolved.</p>
+  </header>
+
+  <section class="grid metrics">
+    <div class="card metric"><b>100</b><span>resolved rows</span></div>
+    <div class="card metric"><b>87%</b><span>buildable among resolved rows</span></div>
+    <div class="card metric"><b>61</b><span>resolved rows using OAuth2</span></div>
+    <div class="card metric"><b>0</b><span>rows needing retry/manual research</span></div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Patterns</h2>
+      <p><span class="pill">OAuth2 dominates mature SaaS</span><span class="pill">API keys dominate infra/data</span><span class="pill">Docs quality is the main blocker</span></p>
+      <p>Existing Composio coverage is strongest in CRM, support, developer platforms, productivity, marketing, and finance. The easy wins are rows with clear REST/GraphQL docs and credential flows. The hard rows are not technically hard; they are access/process hard: partner-gated APIs, unclear developer access, product pages without docs, or ambiguous product identity.</p>
+      <p>Among resolved rows, 87 are buildable today and 13 are currently blocked.</p>
+    </div>
+    <div class="card">
+      <h2>Agent Workflow</h2>
+      <p><b>Layer 1:</b> match the 100 apps against Composio's toolkit catalog and reuse known auth schemes, categories, evidence URLs, and action counts.</p>
+      <p><b>Layer 2:</b> for apps with no catalog match, call Composio's search fetch tool, then ask Groq to extract into a Pydantic-validated schema. Fetched docs are treated as untrusted data.</p>
+      <p><b>Human loop:</b> inspect false fuzzy matches, disambiguate similar company names, and manually review low-confidence or failed rows.</p>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Auth Mix</h2>
+      
+    <div class="bar-row">
+      <div class="bar-label">OAuth2</div>
+      <div class="bar-track"><span style="width:61%"></span></div>
+      <div class="bar-value">61</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">API key</div>
+      <div class="bar-track"><span style="width:52%"></span></div>
+      <div class="bar-value">52</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Other / unclear</div>
+      <div class="bar-track"><span style="width:18%"></span></div>
+      <div class="bar-value">18</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Basic</div>
+      <div class="bar-track"><span style="width:3%"></span></div>
+      <div class="bar-value">3</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Token</div>
+      <div class="bar-track"><span style="width:2%"></span></div>
+      <div class="bar-value">2</div>
+    </div>
+    </div>
+    <div class="card">
+      <h2>Access Mix</h2>
+      
+    <div class="bar-row">
+      <div class="bar-label">Existing Composio toolkit</div>
+      <div class="bar-track"><span style="width:71%"></span></div>
+      <div class="bar-value">71</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">self serve free</div>
+      <div class="bar-track"><span style="width:11%"></span></div>
+      <div class="bar-value">11</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">unclear</div>
+      <div class="bar-track"><span style="width:7%"></span></div>
+      <div class="bar-value">7</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">partner gated</div>
+      <div class="bar-track"><span style="width:6%"></span></div>
+      <div class="bar-value">6</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">self serve trial</div>
+      <div class="bar-track"><span style="width:4%"></span></div>
+      <div class="bar-value">4</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">paid plan required</div>
+      <div class="bar-track"><span style="width:2%"></span></div>
+      <div class="bar-value">1</div>
+    </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Category Coverage</h2>
+    <div class="grid three">
+        <div class="mini-card">
+          <b>AI, Research and Media-native</b>
+          <span>10 resolved, 9 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>CRM and Sales</b>
+          <span>10 resolved, 9 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Communications and Messaging</b>
+          <span>10 resolved, 9 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Data, SEO and Scraping</b>
+          <span>10 resolved, 9 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Developer, Infra and Data platforms</b>
+          <span>10 resolved, 10 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Ecommerce</b>
+          <span>10 resolved, 6 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Finance and Fintech</b>
+          <span>10 resolved, 8 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Marketing, Ads, Email and Social</b>
+          <span>10 resolved, 9 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Productivity and Project Management</b>
+          <span>10 resolved, 10 buildable</span>
+        </div>
+
+        <div class="mini-card">
+          <b>Support and Helpdesk</b>
+          <span>10 resolved, 8 buildable</span>
+        </div></div>
+  </section>
+
+  <section>
+    <h2>Verification</h2>
+    <div class="callout">
+      <p><b>Honesty note:</b> this run is not a fully verified final answer. It has a working automation path and an explicit error queue. The current trustworthy claim is coverage and pattern direction, not perfect 100-row accuracy.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Sample</th><th>Check performed</th><th>Result</th></tr></thead>
+        <tbody><tr><td>Copper</td><td>Rejected fuzzy match to Copperx</td><td>Prevented a wrong-toolkit false positive.</td></tr>
+<tr><td>Salesforce Commerce Cloud</td><td>Rejected generic Salesforce/Service Cloud match</td><td>Kept ecommerce-specific row in Layer 2.</td></tr>
+<tr><td>NotebookLM</td><td>Added explicit alias google_notebooklm</td><td>Recovered a first-pass false negative.</td></tr>
+<tr><td>iPayX</td><td>Detected prompt-injection-like page content</td><td>Extractor prompt treats fetched content as data, not instructions.</td></tr>
+<tr><td>Podio</td><td>Layer 2 extracted from fetched page</td><td>Medium confidence because page text was marketing-heavy.</td></tr>
+<tr><td>Pylon / Gladly / Copper</td><td>Agent marked no public API found</td><td>Low confidence rows are surfaced as not buildable, not hidden.</td></tr>
+<tr><td>18 Layer 2 failures</td><td>Manual verification layer added</td><td>All 100 rows now have evidence; manually filled rows remain labeled as Manual verification.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Open Queue</h2>
+    <p>None</p>
+  </section>
+
+  <section>
+    <h2>100-App Matrix</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>App</th><th>Category / one-line</th><th>Auth</th><th>Access</th>
+            <th>API surface</th><th>Verdict</th><th>Blocker</th><th>Evidence</th><th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Salesforce</strong><span>CRM and Sales</span></td>
+          <td>Salesforce is a leading CRM platform integrating sales, service, marketing, and analytics to build customer relationships and drive business growth</td>
+          <td>OAuth2, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 217 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/salesforce">https://composio.dev/toolkits/salesforce</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>2</td>
+          <td><strong>HubSpot</strong><span>CRM and Sales</span></td>
+          <td>HubSpot is an inbound marketing, sales, and customer service platform integrating CRM, email automation, and analytics to facilitate lead nurturing and seamless customer experiences</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 245 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/hubspot">https://composio.dev/toolkits/hubspot</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>3</td>
+          <td><strong>Pipedrive</strong><span>CRM and Sales</span></td>
+          <td>Pipedrive is a sales management tool built around pipeline visualization, lead tracking, activity reminders, and automation to keep deals progressing</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 402 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/pipedrive">https://composio.dev/toolkits/pipedrive</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>4</td>
+          <td><strong>Attio</strong><span>CRM and Sales</span></td>
+          <td>Attio is a fully customizable workspace for your team&#x27;s relationships and workflows.</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 108 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/attio">https://composio.dev/toolkits/attio</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>5</td>
+          <td><strong>Twenty</strong><span>CRM and Sales</span></td>
+          <td>The #1 Open-Source CRM. Modern, powerful, affordable platform to manage your customer relationships.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/twenty">https://composio.dev/toolkits/twenty</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>6</td>
+          <td><strong>Podio</strong><span>CRM and Sales</span></td>
+          <td>Work management and collaboration platform</td>
+          <td>Other / unclear</td>
+          <td>self serve trial</td>
+          <td>REST, with robust APIs designed to support enterprise needs</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://podio.com">https://podio.com</a></td>
+          <td>Layer 2<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>7</td>
+          <td><strong>Zoho CRM</strong><span>CRM and Sales</span></td>
+          <td>Zoho is a suite of cloud applications including CRM, email marketing, and collaboration tools, enabling businesses to automate and scale operations</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 57 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/zoho">https://composio.dev/toolkits/zoho</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>8</td>
+          <td><strong>Close</strong><span>CRM and Sales</span></td>
+          <td>Close is a CRM platform designed to help businesses manage and streamline their sales processes, including calling, email automation, and predictive dialers.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 6 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/close">https://composio.dev/toolkits/close</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>9</td>
+          <td><strong>Copper</strong><span>CRM and Sales</span></td>
+          <td>Customer Relationship Management (CRM) software</td>
+          <td>OAuth2</td>
+          <td>self serve trial</td>
+          <td>no public API found</td>
+          <td>Not buildable yet</td>
+          <td>no public API documentation found</td>
+          <td><a href="https://copper.com">https://copper.com</a></td>
+          <td>Layer 2<span>low</span></td>
+        </tr>
+
+        <tr>
+          <td>10</td>
+          <td><strong>DealCloud</strong><span>CRM and Sales</span></td>
+          <td>Investment Management and CRM</td>
+          <td>Other / unclear</td>
+          <td>unclear</td>
+          <td>REST, API references available</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://api.docs.dealcloud.com">https://api.docs.dealcloud.com</a></td>
+          <td>Layer 2<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>11</td>
+          <td><strong>Zendesk</strong><span>Support and Helpdesk</span></td>
+          <td>Zendesk provides customer support software with ticketing, live chat, and knowledge base features, enabling efficient helpdesk operations and customer engagement</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 452 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/zendesk">https://composio.dev/toolkits/zendesk</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>12</td>
+          <td><strong>Intercom</strong><span>Support and Helpdesk</span></td>
+          <td>Intercom provides live chat, messaging, and customer engagement tools, enabling businesses to drive conversions, handle support, and personalize communication at scale</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 133 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/intercom">https://composio.dev/toolkits/intercom</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>13</td>
+          <td><strong>Freshdesk</strong><span>Support and Helpdesk</span></td>
+          <td>Freshdesk provides customer support software with ticketing, knowledge base, and automation features for efficient helpdesk operations and better customer experiences</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 178 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/freshdesk">https://composio.dev/toolkits/freshdesk</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>14</td>
+          <td><strong>Front</strong><span>Support and Helpdesk</span></td>
+          <td>Front is a shared inbox and collaboration platform that centralizes customer communications from multiple channels, enabling teams to manage emails, chats, and more</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/front">https://composio.dev/toolkits/front</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>15</td>
+          <td><strong>Pylon</strong><span>Support and Helpdesk</span></td>
+          <td>AI-native B2B customer support platform</td>
+          <td>Other / unclear</td>
+          <td>unclear</td>
+          <td>no public API found</td>
+          <td>Not buildable yet</td>
+          <td>no public API or documentation found</td>
+          <td><a href="https://usepylon.com">https://usepylon.com</a></td>
+          <td>Layer 2<span>low</span></td>
+        </tr>
+
+        <tr>
+          <td>16</td>
+          <td><strong>LiveAgent</strong><span>Support and Helpdesk</span></td>
+          <td>LiveAgent is a web-based live chat and helpdesk software that covers all support channels including email, live chat, call center, contact forms, feedback forms, knowledge base, and social networks.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/liveagent">https://composio.dev/toolkits/liveagent</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>17</td>
+          <td><strong>Plain</strong><span>Support and Helpdesk</span></td>
+          <td>Plain is a collaborative support platform for B2B support teams, offering a modern, AI-powered interface to consolidate support channels and assist customers efficiently.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 23 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/plain">https://composio.dev/toolkits/plain</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>18</td>
+          <td><strong>Help Scout</strong><span>Support and Helpdesk</span></td>
+          <td>Help Scout provides customer support software with shared inbox, knowledge base, and customer management tools</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 129 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/help_scout">https://composio.dev/toolkits/help_scout</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>19</td>
+          <td><strong>Gorgias</strong><span>Support and Helpdesk</span></td>
+          <td>Gorgias is a helpdesk and live chat platform specializing in e-commerce, offering automated support, order management, and unified customer communication</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 32 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/gorgias">https://composio.dev/toolkits/gorgias</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>20</td>
+          <td><strong>Gladly</strong><span>Support and Helpdesk</span></td>
+          <td>Customer experience AI for driving customer devotion and lifetime value</td>
+          <td>Other / unclear</td>
+          <td>unclear</td>
+          <td>no public API found</td>
+          <td>Not buildable yet</td>
+          <td>lack of publicly available API documentation or details</td>
+          <td><a href="https://gladly.com">https://gladly.com</a></td>
+          <td>Layer 2<span>low</span></td>
+        </tr>
+
+        <tr>
+          <td>21</td>
+          <td><strong>Slack</strong><span>Communications and Messaging</span></td>
+          <td>Slack is a channel-based messaging platform. With Slack, people can work together more effectively, connect all their software tools and services, and find the information they need to do their best w</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 167 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/slack">https://composio.dev/toolkits/slack</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>22</td>
+          <td><strong>Twilio</strong><span>Communications and Messaging</span></td>
+          <td>Twilio allows software developers to programmatically make and receive phone calls, send and receive text messages, and perform other communication functions using its web service APIs.</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 1 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/twilio">https://composio.dev/toolkits/twilio</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>23</td>
+          <td><strong>Zoho Cliq</strong><span>Communications and Messaging</span></td>
+          <td>Team communication and collaboration platform by Zoho with channels, bots, and integrations</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/zoho_cliq">https://composio.dev/toolkits/zoho_cliq</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>24</td>
+          <td><strong>Lark (Larksuite)</strong><span>Communications and Messaging</span></td>
+          <td>Enterprise collaboration platform with messaging, video conferencing, calendar, and document management</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/lark">https://composio.dev/toolkits/lark</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>25</td>
+          <td><strong>Pumble</strong><span>Communications and Messaging</span></td>
+          <td>Team communication and collaboration platform</td>
+          <td>Other / unclear</td>
+          <td>self serve free</td>
+          <td>MCP server, no public REST API found</td>
+          <td>Not buildable yet</td>
+          <td>No public API documentation or endpoints found</td>
+          <td><a href="https://pumble.com">https://pumble.com</a></td>
+          <td>Layer 2<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>26</td>
+          <td><strong>Discord</strong><span>Communications and Messaging</span></td>
+          <td>An instant messaging and VoIP social platform.</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 28 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/discord">https://composio.dev/toolkits/discord</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>27</td>
+          <td><strong>Telegram</strong><span>Communications and Messaging</span></td>
+          <td>Telegram is a cloud-based messaging app with a focus on security and speed. Build bots to send messages, manage chats, and interact with users.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 18 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/telegram">https://composio.dev/toolkits/telegram</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>28</td>
+          <td><strong>WhatsApp Business</strong><span>Communications and Messaging</span></td>
+          <td>Enables interaction with customers through the WhatsApp Business API for messaging and automation. Only supports WhatsApp Business accounts, not WhatsApp Personal accounts.</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 57 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/whatsapp">https://composio.dev/toolkits/whatsapp</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>29</td>
+          <td><strong>Aircall</strong><span>Communications and Messaging</span></td>
+          <td>Cloud-based phone system for customer support and sales teams</td>
+          <td>OAuth2, Basic</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/aircall">https://composio.dev/toolkits/aircall</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>30</td>
+          <td><strong>Vonage</strong><span>Communications and Messaging</span></td>
+          <td>Communication &amp; Network APIs</td>
+          <td>Other / unclear</td>
+          <td>self serve free</td>
+          <td>REST, with multiple APIs and roughly 20+ endpoints</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://developer.vonage.com">https://developer.vonage.com</a></td>
+          <td>Layer 2<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>31</td>
+          <td><strong>Google Ads</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>Google Ads, is an online advertising platform developed by Google, where advertisers bid to display brief advertisements, service offerings, product listings, and videos to web users.</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 22 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/googleads">https://composio.dev/toolkits/googleads</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>32</td>
+          <td><strong>Meta Ads</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>Create, edit and get insights from ads across Meta technologies, including Facebook, Instagram, Messenger, WhatsApp and more.</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 52 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/metaads">https://composio.dev/toolkits/metaads</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>33</td>
+          <td><strong>LinkedIn Ads</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>LinkedIn is a professional networking platform enabling job seekers, companies, and thought leaders to connect, share content, and discover business opportunities</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 22 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/linkedin">https://composio.dev/toolkits/linkedin</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>34</td>
+          <td><strong>GoHighLevel</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>All-in-one platform for marketing agencies combining CRM, marketing automation, and client management tools</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/go_high_level">https://composio.dev/toolkits/go_high_level</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>35</td>
+          <td><strong>Mailchimp</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>Mailchimp is an email marketing and automation platform providing campaign templates, audience segmentation, and performance analytics to drive engagement and conversions</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 275 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/mailchimp">https://composio.dev/toolkits/mailchimp</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>36</td>
+          <td><strong>Klaviyo</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>Klaviyo is a data-driven email and SMS marketing platform that allows e-commerce brands to deliver targeted messages, track conversions, and scale customer relationships</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 225 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/klaviyo">https://composio.dev/toolkits/klaviyo</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>37</td>
+          <td><strong>systeme.io</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>The world&#x27;s easiest all-in-one marketing platform</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/systeme_io">https://composio.dev/toolkits/systeme_io</a></td>
+          <td>Layer 1<span>fuzzy_needs_check</span></td>
+        </tr>
+
+        <tr>
+          <td>38</td>
+          <td><strong>Pinterest</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>Pinterest is a visual discovery platform for finding ideas like recipes, home and style inspiration, and more.</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/pinterest">https://composio.dev/toolkits/pinterest</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>39</td>
+          <td><strong>Threads (Meta)</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>Social discussion platform</td>
+          <td>Other / unclear</td>
+          <td>unclear</td>
+          <td>no public API found or inaccessible</td>
+          <td>Not buildable yet</td>
+          <td>Inaccessible documentation due to 403 error</td>
+          <td><a href="https://developers.facebook.com/docs/threads">https://developers.facebook.com/docs/threads</a></td>
+          <td>Layer 2<span>low</span></td>
+        </tr>
+
+        <tr>
+          <td>40</td>
+          <td><strong>SendGrid</strong><span>Marketing, Ads, Email and Social</span></td>
+          <td>SendGrid is a cloud-based email delivery platform providing transactional and marketing email services, with APIs for integration, analytics, and scalability</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 364 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/sendgrid">https://composio.dev/toolkits/sendgrid</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>41</td>
+          <td><strong>Shopify</strong><span>Ecommerce</span></td>
+          <td>Shopify is an e-commerce platform. This toolkit is GraphQL-first for new Admin API automations while retaining legacy REST compatibility actions for older workflows and numeric-ID interoperability</td>
+          <td>API key, OAuth2, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 407 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/shopify">https://composio.dev/toolkits/shopify</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>42</td>
+          <td><strong>WooCommerce</strong><span>Ecommerce</span></td>
+          <td>E-commerce platform</td>
+          <td>API key</td>
+          <td>self serve free</td>
+          <td>REST API</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://woocommerce.com/document/woocommerce-rest-api">https://woocommerce.com/document/woocommerce-rest-api</a></td>
+          <td>Layer 2<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>43</td>
+          <td><strong>BigCommerce</strong><span>Ecommerce</span></td>
+          <td>Enterprise e-commerce platform for building and managing online stores</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/bigcommerce">https://composio.dev/toolkits/bigcommerce</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>44</td>
+          <td><strong>Salesforce Commerce Cloud</strong><span>Ecommerce</span></td>
+          <td>E-commerce platform</td>
+          <td>OAuth2</td>
+          <td>paid plan required</td>
+          <td>REST, API details not found on this page</td>
+          <td>Not buildable yet</td>
+          <td>insufficient information on the provided page</td>
+          <td><a href="https://developer.salesforce.com/docs/commerce">https://developer.salesforce.com/docs/commerce</a></td>
+          <td>Layer 2<span>low</span></td>
+        </tr>
+
+        <tr>
+          <td>45</td>
+          <td><strong>Magento (Adobe Commerce)</strong><span>Ecommerce</span></td>
+          <td>E-commerce platform</td>
+          <td>Other / unclear</td>
+          <td>unclear</td>
+          <td>REST, with an API playground for hands-on learning</td>
+          <td>Not buildable yet</td>
+          <td>lack of clear API documentation and authentication details</td>
+          <td><a href="https://developer.adobe.com/commerce">https://developer.adobe.com/commerce</a></td>
+          <td>Layer 2<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>46</td>
+          <td><strong>Squarespace</strong><span>Ecommerce</span></td>
+          <td>Squarespace Commerce API for managing orders, products, inventory, and transactions</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/squarespace">https://composio.dev/toolkits/squarespace</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>47</td>
+          <td><strong>Ecwid</strong><span>Ecommerce</span></td>
+          <td>Ecommerce storefront and shopping cart platform</td>
+          <td>OAuth2</td>
+          <td>self serve free</td>
+          <td>REST API covering products, orders, customers, carts, store profile, discounts, and application lifecycle</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://api-docs.ecwid.com">https://api-docs.ecwid.com</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>48</td>
+          <td><strong>Gumroad</strong><span>Ecommerce</span></td>
+          <td>Gumroad simplifies selling digital goods, physical products, and memberships by offering a streamlined checkout, marketing tools, and direct payout options</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 7 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/gumroad">https://composio.dev/toolkits/gumroad</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>49</td>
+          <td><strong>Amazon Selling Partner</strong><span>Ecommerce</span></td>
+          <td>Marketplace seller/vendor operations API</td>
+          <td>OAuth2, Other / unclear</td>
+          <td>partner gated</td>
+          <td>REST APIs across listings, orders, reports, feeds, catalog, inventory, finances, and seller operations</td>
+          <td>Not buildable yet</td>
+          <td>Requires Amazon developer registration, seller/vendor context, app review, and restricted data approval for many useful scopes</td>
+          <td><a href="https://developer-docs.amazon.com/sp-api/docs/authorization-overview">https://developer-docs.amazon.com/sp-api/docs/authorization-overview</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>50</td>
+          <td><strong>fanbasis</strong><span>Ecommerce</span></td>
+          <td>Creator monetization and fan experience marketplace</td>
+          <td>Other / unclear</td>
+          <td>partner gated</td>
+          <td>no public API found</td>
+          <td>Not buildable yet</td>
+          <td>No public developer documentation or credential flow found</td>
+          <td><a href="https://fanbasis.com">https://fanbasis.com</a></td>
+          <td>Manual verification<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>51</td>
+          <td><strong>DataForSEO</strong><span>Data, SEO and Scraping</span></td>
+          <td>SEO data and analytics platform providing SERP data, backlinks, keywords, and competitive intelligence</td>
+          <td>Basic</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 312 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/dataforseo">https://composio.dev/toolkits/dataforseo</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>52</td>
+          <td><strong>SE Ranking</strong><span>Data, SEO and Scraping</span></td>
+          <td>SEO and GEO data platform</td>
+          <td>API key</td>
+          <td>self serve trial</td>
+          <td>REST API for SEO data, projects, audits, backlinks, keyword research, AI search, and account data; MCP connector also advertised</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://seranking.com/api.html">https://seranking.com/api.html</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>53</td>
+          <td><strong>Ahrefs</strong><span>Data, SEO and Scraping</span></td>
+          <td>Ahrefs is an SEO and marketing platform offering site audits, keyword research, content analysis, and competitive insights to improve search rankings and drive organic traffic</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 40 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/ahrefs">https://composio.dev/toolkits/ahrefs</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>54</td>
+          <td><strong>MrScraper</strong><span>Data, SEO and Scraping</span></td>
+          <td>Web scraping and structured extraction platform</td>
+          <td>API key</td>
+          <td>self serve free</td>
+          <td>REST API / SDK docs for scraping jobs and extraction workflows</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://docs.mrscraper.com/docs/getting-started/overview">https://docs.mrscraper.com/docs/getting-started/overview</a></td>
+          <td>Manual verification<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>55</td>
+          <td><strong>Apify</strong><span>Data, SEO and Scraping</span></td>
+          <td>Apify is a platform for building, deploying, and managing web scraping and automation tools, known as Actors.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 113 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/apify">https://composio.dev/toolkits/apify</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>56</td>
+          <td><strong>Firecrawl</strong><span>Data, SEO and Scraping</span></td>
+          <td>Firecrawl automates web crawling and data extraction, enabling organizations to gather content, index sites, and gain insights from online sources at scale</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 30 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/firecrawl">https://composio.dev/toolkits/firecrawl</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>57</td>
+          <td><strong>Bright Data</strong><span>Data, SEO and Scraping</span></td>
+          <td>Bright Data provides the world&#x27;s #1 web data platform with Web Unlocker for bypassing anti-bot systems, SERP API for search engine data, and pre-made scrapers for popular websites. Collect any web dat</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 10 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/brightdata">https://composio.dev/toolkits/brightdata</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>58</td>
+          <td><strong>Sherlock</strong><span>Data, SEO and Scraping</span></td>
+          <td>Open-source username/social account discovery CLI</td>
+          <td>Other / unclear</td>
+          <td>self serve free</td>
+          <td>CLI/Python project, not a hosted SaaS API</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://github.com/sherlock-project/sherlock">https://github.com/sherlock-project/sherlock</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>59</td>
+          <td><strong>Waterfall.io</strong><span>Data, SEO and Scraping</span></td>
+          <td>Contact and company intelligence / enrichment platform</td>
+          <td>Other / unclear</td>
+          <td>partner gated</td>
+          <td>no public API docs found</td>
+          <td>Not buildable yet</td>
+          <td>Developer access appears sales-led or undocumented</td>
+          <td><a href="https://waterfall.io">https://waterfall.io</a></td>
+          <td>Manual verification<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>60</td>
+          <td><strong>Clay</strong><span>Data, SEO and Scraping</span></td>
+          <td>Data enrichment and workflow automation platform with People and Company lookup endpoints for Enterprise customers</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/clay">https://composio.dev/toolkits/clay</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>61</td>
+          <td><strong>GitHub</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>GitHub is a code hosting platform for version control and collaboration, offering Git-based repository management, issue tracking, and continuous integration features</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 893 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/github">https://composio.dev/toolkits/github</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>62</td>
+          <td><strong>Vercel</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Vercel is a platform for frontend frameworks and static sites, enabling developers to host websites and web services that deploy instantly, scale automatically, and require minimal configuration.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 146 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/vercel">https://composio.dev/toolkits/vercel</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>63</td>
+          <td><strong>Netlify</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Cloud platform for web development with continuous deployment and serverless functions</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/netlify">https://composio.dev/toolkits/netlify</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>64</td>
+          <td><strong>Cloudflare</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Cloudflare is a global network designed to make everything you connect to the Internet secure, private, fast, and reliable.</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 20 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/cloudflare">https://composio.dev/toolkits/cloudflare</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>65</td>
+          <td><strong>Supabase</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Supabase is an open-source backend-as-a-service providing a Postgres database, authentication, storage, and real-time subscription APIs for building modern applications</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 129 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/supabase">https://composio.dev/toolkits/supabase</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>66</td>
+          <td><strong>Neo4j</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Graph database platform for connected data and real-time analytics</td>
+          <td>OAuth2, Basic, API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 21 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/neo4j">https://composio.dev/toolkits/neo4j</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>67</td>
+          <td><strong>Snowflake</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Snowflake is a cloud-based data warehouse offering elastic scaling, secure data sharing, and SQL analytics across multiple cloud environments</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 17 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/snowflake">https://composio.dev/toolkits/snowflake</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>68</td>
+          <td><strong>MongoDB Atlas</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Managed MongoDB cloud database platform</td>
+          <td>API key, Other / unclear</td>
+          <td>self serve free</td>
+          <td>Atlas Admin REST API covering projects, clusters, users, networking, backups, alerts, and organization administration</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://www.mongodb.com/docs/atlas/api/">https://www.mongodb.com/docs/atlas/api/</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>69</td>
+          <td><strong>Datadog</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Datadog offers monitoring, observability, and security for cloud-scale applications, unifying metrics, logs, and traces to help teams detect issues and optimize performance</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 43 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/datadog">https://composio.dev/toolkits/datadog</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>70</td>
+          <td><strong>Sentry</strong><span>Developer, Infra and Data platforms</span></td>
+          <td>Integrate Sentry to manage your error tracking and monitoring.</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 211 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/sentry">https://composio.dev/toolkits/sentry</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>71</td>
+          <td><strong>Notion</strong><span>Productivity and Project Management</span></td>
+          <td>Notion centralizes notes, docs, wikis, and tasks in a unified workspace, letting teams build custom workflows for collaboration and knowledge management</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 48 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/notion">https://composio.dev/toolkits/notion</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>72</td>
+          <td><strong>Airtable</strong><span>Productivity and Project Management</span></td>
+          <td>Airtable merges spreadsheet functionality with database power, enabling teams to organize projects, track tasks, and collaborate through customizable views, automation, and integrations for data manag</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 26 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/airtable">https://composio.dev/toolkits/airtable</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>73</td>
+          <td><strong>Linear</strong><span>Productivity and Project Management</span></td>
+          <td>Linear is a streamlined issue tracking and project planning tool for modern teams, featuring fast workflows, keyboard shortcuts, and GitHub integrations</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 47 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/linear">https://composio.dev/toolkits/linear</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>74</td>
+          <td><strong>Jira</strong><span>Productivity and Project Management</span></td>
+          <td>A tool for bug tracking, issue tracking, and agile project management.</td>
+          <td>OAuth2, OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 102 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/jira">https://composio.dev/toolkits/jira</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>75</td>
+          <td><strong>Asana</strong><span>Productivity and Project Management</span></td>
+          <td>Tool to help teams organize, track, and manage their work.</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 153 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/asana">https://composio.dev/toolkits/asana</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>76</td>
+          <td><strong>Monday.com</strong><span>Productivity and Project Management</span></td>
+          <td>monday.com is a customizable work management platform for project planning, collaboration, and automation, supporting agile, sales, marketing, and more</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 125 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/monday">https://composio.dev/toolkits/monday</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>77</td>
+          <td><strong>ClickUp</strong><span>Productivity and Project Management</span></td>
+          <td>ClickUp unifies tasks, docs, goals, and chat in a single platform, allowing teams to plan, organize, and collaborate across projects with customizable workflows</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 164 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/clickup">https://composio.dev/toolkits/clickup</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>78</td>
+          <td><strong>Coda</strong><span>Productivity and Project Management</span></td>
+          <td>Collaborative workspace platform that transforms documents into powerful tools for team productivity and project management</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 110 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/coda">https://composio.dev/toolkits/coda</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>79</td>
+          <td><strong>Smartsheet</strong><span>Productivity and Project Management</span></td>
+          <td>Work management and spreadsheet-like project platform</td>
+          <td>OAuth2, Token</td>
+          <td>self serve free</td>
+          <td>REST API covering sheets, rows, columns, attachments, comments, reports, workspaces, users, and webhooks</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://developers.smartsheet.com/api/smartsheet/openapi">https://developers.smartsheet.com/api/smartsheet/openapi</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>80</td>
+          <td><strong>Harvest</strong><span>Productivity and Project Management</span></td>
+          <td>Harvest is a time-tracking and invoicing tool designed for teams and freelancers, helping them log billable hours, manage projects, and streamline payments</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 57 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/harvest">https://composio.dev/toolkits/harvest</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>81</td>
+          <td><strong>Stripe</strong><span>Finance and Fintech</span></td>
+          <td>Stripe offers online payment infrastructure, fraud prevention, and APIs enabling businesses to accept and manage payments globally</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 432 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/stripe">https://composio.dev/toolkits/stripe</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>82</td>
+          <td><strong>Plaid</strong><span>Finance and Fintech</span></td>
+          <td>Plaid provides financial data aggregation and banking APIs for applications to connect with users&#x27; bank accounts</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/plaid">https://composio.dev/toolkits/plaid</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>83</td>
+          <td><strong>Binance</strong><span>Finance and Fintech</span></td>
+          <td>Cryptocurrency exchange and market/trading APIs</td>
+          <td>API key, Other / unclear</td>
+          <td>self serve free</td>
+          <td>REST and WebSocket APIs for market data, account data, trading, wallet operations, and exchange metadata</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://developers.binance.com/docs/binance-spot-api-docs">https://developers.binance.com/docs/binance-spot-api-docs</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>84</td>
+          <td><strong>Paygent Connect</strong><span>Finance and Fintech</span></td>
+          <td>Payments gateway / merchant processing connector</td>
+          <td>Other / unclear</td>
+          <td>partner gated</td>
+          <td>no public API docs found for the requested Paygent Connect product</td>
+          <td>Not buildable yet</td>
+          <td>Ambiguous product identity and no public developer documentation; likely requires NMI/Paygent partner access</td>
+          <td><a href="https://www.nmi.com">https://www.nmi.com</a></td>
+          <td>Manual verification<span>low</span></td>
+        </tr>
+
+        <tr>
+          <td>85</td>
+          <td><strong>iPayX</strong><span>Finance and Fintech</span></td>
+          <td>AI/payment workflow platform</td>
+          <td>API key</td>
+          <td>unclear</td>
+          <td>public docs indicate an agent-facing/API integration surface; exact endpoint breadth needs implementation review</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://ipayx.ai/docs">https://ipayx.ai/docs</a></td>
+          <td>Manual verification<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>86</td>
+          <td><strong>QuickBooks</strong><span>Finance and Fintech</span></td>
+          <td>Quickbooks is a cloud-based accounting software that helps you manage your finances, track your income and expenses, and get insights into your business</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 114 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/quickbooks">https://composio.dev/toolkits/quickbooks</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>87</td>
+          <td><strong>Xero</strong><span>Finance and Fintech</span></td>
+          <td>Xero is a cloud-based accounting software for small businesses, providing invoicing, bank reconciliation, bookkeeping, and financial reporting in real time</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 53 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/xero">https://composio.dev/toolkits/xero</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>88</td>
+          <td><strong>Brex</strong><span>Finance and Fintech</span></td>
+          <td>Brex provides corporate credit cards, spend management, and financial tools tailored for startups and tech businesses to optimize cash flow, accounting, and growth</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 84 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/brex">https://composio.dev/toolkits/brex</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>89</td>
+          <td><strong>Ramp</strong><span>Finance and Fintech</span></td>
+          <td>Ramp is a platform that helps you manage your finances, track your income and expenses, and get insights into your business</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 88 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/ramp">https://composio.dev/toolkits/ramp</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>90</td>
+          <td><strong>PitchBook</strong><span>Finance and Fintech</span></td>
+          <td>Private market and company research data platform</td>
+          <td>Other / unclear</td>
+          <td>partner gated</td>
+          <td>research/data API exists for customers, but public endpoint docs are not self-serve</td>
+          <td>Not buildable yet</td>
+          <td>Enterprise data licensing and API access are gated behind customer relationship</td>
+          <td><a href="https://pitchbook.com/products/api">https://pitchbook.com/products/api</a></td>
+          <td>Manual verification<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>91</td>
+          <td><strong>NotebookLM</strong><span>AI, Research and Media-native</span></td>
+          <td>Google NotebookLM Enterprise API for managing AI-powered notebooks and research sources</td>
+          <td>OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/google_notebooklm">https://composio.dev/toolkits/google_notebooklm</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>92</td>
+          <td><strong>Otter AI</strong><span>AI, Research and Media-native</span></td>
+          <td>AI meeting transcription and meeting knowledge platform</td>
+          <td>OAuth2</td>
+          <td>unclear</td>
+          <td>public API and MCP server announced; detailed developer docs appear limited or account-gated</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://help.otter.ai">https://help.otter.ai</a></td>
+          <td>Manual verification<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>93</td>
+          <td><strong>Fathom</strong><span>AI, Research and Media-native</span></td>
+          <td>AI meeting assistant that records, transcribes, and summarizes meetings</td>
+          <td>OAuth2, API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 7 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/fathom">https://composio.dev/toolkits/fathom</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>94</td>
+          <td><strong>Consensus</strong><span>AI, Research and Media-native</span></td>
+          <td>AI academic literature search and evidence synthesis product</td>
+          <td>OAuth2, Other / unclear</td>
+          <td>partner gated</td>
+          <td>no public API docs found</td>
+          <td>Not buildable yet</td>
+          <td>OAuth/API access appears to require direct vendor engagement</td>
+          <td><a href="https://consensus.app">https://consensus.app</a></td>
+          <td>Manual verification<span>medium</span></td>
+        </tr>
+
+        <tr>
+          <td>95</td>
+          <td><strong>Reducto</strong><span>AI, Research and Media-native</span></td>
+          <td>Document parsing and extraction API that converts documents into structured data</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/reducto">https://composio.dev/toolkits/reducto</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>96</td>
+          <td><strong>Devin</strong><span>AI, Research and Media-native</span></td>
+          <td>Autonomous AI software engineering agent</td>
+          <td>Token, API key</td>
+          <td>self serve trial</td>
+          <td>REST API for sessions, knowledge, playbooks, secrets, repositories, schedules, org/admin resources, plus Devin MCP</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://docs.devin.ai/api-reference/overview">https://docs.devin.ai/api-reference/overview</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>97</td>
+          <td><strong>higgsfield</strong><span>AI, Research and Media-native</span></td>
+          <td>AI-powered video generation platform for creating high-quality videos from text and images</td>
+          <td>API key</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 3 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/higgsfield">https://composio.dev/toolkits/higgsfield</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr>
+
+        <tr>
+          <td>98</td>
+          <td><strong>Mermaid CLI</strong><span>AI, Research and Media-native</span></td>
+          <td>Open-source command-line renderer for Mermaid diagrams</td>
+          <td>Other / unclear</td>
+          <td>self serve free</td>
+          <td>CLI package, not a hosted API</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://github.com/mermaid-js/mermaid-cli">https://github.com/mermaid-js/mermaid-cli</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>99</td>
+          <td><strong>YouTube Transcript</strong><span>AI, Research and Media-native</span></td>
+          <td>YouTube transcript extraction API</td>
+          <td>API key</td>
+          <td>self serve free</td>
+          <td>REST API for YouTube transcript retrieval plus related search/channel/playlist transcript features</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://transcriptapi.com/docs/">https://transcriptapi.com/docs/</a></td>
+          <td>Manual verification<span>high</span></td>
+        </tr>
+
+        <tr>
+          <td>100</td>
+          <td><strong>Grain</strong><span>AI, Research and Media-native</span></td>
+          <td>AI-powered meeting recording and note-taking platform for teams</td>
+          <td>API key, OAuth2</td>
+          <td>Existing Composio toolkit</td>
+          <td>Composio toolkit with 0 actions</td>
+          <td>Buildable now</td>
+          <td></td>
+          <td><a href="https://composio.dev/toolkits/grain">https://composio.dev/toolkits/grain</a></td>
+          <td>Layer 1<span>exact</span></td>
+        </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Run It</h2>
+    <div class="card">
+      <p><code>python pipeline_layer1_composio_match.py</code></p>
+      <p><code>python -u pipeline_layer2_research_agent.py</code></p>
+      <p><code>python scripts/build_case_study.py</code></p>
+      <p class="small">Outputs: <code>data/layer1_results.json</code>, <code>data/layer2_results.json</code>, <code>data/layer2_errors.json</code>, and this self-contained <code>case_study.html</code>.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

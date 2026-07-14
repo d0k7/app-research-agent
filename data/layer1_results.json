@@ -1,0 +1,1402 @@
+[
+ {
+  "number": 1,
+  "app": "Salesforce",
+  "category_given": "CRM and Sales",
+  "hint": "salesforce.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "salesforce",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "OAUTH2",
+   "S2S_OAUTH2"
+  ],
+  "tool_count": 217,
+  "description": "Salesforce is a leading CRM platform integrating sales, service, marketing, and analytics to build customer relationships and drive business growth",
+  "evidence_url": "https://composio.dev/toolkits/salesforce"
+ },
+ {
+  "number": 2,
+  "app": "HubSpot",
+  "category_given": "CRM and Sales",
+  "hint": "hubspot.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "hubspot",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 245,
+  "description": "HubSpot is an inbound marketing, sales, and customer service platform integrating CRM, email automation, and analytics to facilitate lead nurturing and seamless customer experiences",
+  "evidence_url": "https://composio.dev/toolkits/hubspot"
+ },
+ {
+  "number": 3,
+  "app": "Pipedrive",
+  "category_given": "CRM and Sales",
+  "hint": "pipedrive.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "pipedrive",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 402,
+  "description": "Pipedrive is a sales management tool built around pipeline visualization, lead tracking, activity reminders, and automation to keep deals progressing",
+  "evidence_url": "https://composio.dev/toolkits/pipedrive"
+ },
+ {
+  "number": 4,
+  "app": "Attio",
+  "category_given": "CRM and Sales",
+  "hint": "attio.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "attio",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 108,
+  "description": "Attio is a fully customizable workspace for your team's relationships and workflows.",
+  "evidence_url": "https://composio.dev/toolkits/attio"
+ },
+ {
+  "number": 5,
+  "app": "Twenty",
+  "category_given": "CRM and Sales",
+  "hint": "twenty.com (open-source CRM)",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "twenty",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "The #1 Open-Source CRM. Modern, powerful, affordable platform to manage your customer relationships.",
+  "evidence_url": "https://composio.dev/toolkits/twenty"
+ },
+ {
+  "number": 6,
+  "app": "Podio",
+  "category_given": "CRM and Sales",
+  "hint": "podio.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 7,
+  "app": "Zoho CRM",
+  "category_given": "CRM and Sales",
+  "hint": "zoho.com/crm",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "zoho",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 57,
+  "description": "Zoho is a suite of cloud applications including CRM, email marketing, and collaboration tools, enabling businesses to automate and scale operations",
+  "evidence_url": "https://composio.dev/toolkits/zoho"
+ },
+ {
+  "number": 8,
+  "app": "Close",
+  "category_given": "CRM and Sales",
+  "hint": "close.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "close",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 6,
+  "description": "Close is a CRM platform designed to help businesses manage and streamline their sales processes, including calling, email automation, and predictive dialers.",
+  "evidence_url": "https://composio.dev/toolkits/close"
+ },
+ {
+  "number": 9,
+  "app": "Copper",
+  "category_given": "CRM and Sales",
+  "hint": "copper.com",
+  "fuzzy_rejected": "fuzzy match to 'copperx' rejected by hand: different product, not the same company",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 10,
+  "app": "DealCloud",
+  "category_given": "CRM and Sales",
+  "hint": "api.docs.dealcloud.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 11,
+  "app": "Zendesk",
+  "category_given": "Support and Helpdesk",
+  "hint": "zendesk.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "zendesk",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 452,
+  "description": "Zendesk provides customer support software with ticketing, live chat, and knowledge base features, enabling efficient helpdesk operations and customer engagement",
+  "evidence_url": "https://composio.dev/toolkits/zendesk"
+ },
+ {
+  "number": 12,
+  "app": "Intercom",
+  "category_given": "Support and Helpdesk",
+  "hint": "intercom.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "intercom",
+  "composio_category": "customer support",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 133,
+  "description": "Intercom provides live chat, messaging, and customer engagement tools, enabling businesses to drive conversions, handle support, and personalize communication at scale",
+  "evidence_url": "https://composio.dev/toolkits/intercom"
+ },
+ {
+  "number": 13,
+  "app": "Freshdesk",
+  "category_given": "Support and Helpdesk",
+  "hint": "freshdesk.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "freshdesk",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 178,
+  "description": "Freshdesk provides customer support software with ticketing, knowledge base, and automation features for efficient helpdesk operations and better customer experiences",
+  "evidence_url": "https://composio.dev/toolkits/freshdesk"
+ },
+ {
+  "number": 14,
+  "app": "Front",
+  "category_given": "Support and Helpdesk",
+  "hint": "front.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "front",
+  "composio_category": "customer support",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "Front is a shared inbox and collaboration platform that centralizes customer communications from multiple channels, enabling teams to manage emails, chats, and more",
+  "evidence_url": "https://composio.dev/toolkits/front"
+ },
+ {
+  "number": 15,
+  "app": "Pylon",
+  "category_given": "Support and Helpdesk",
+  "hint": "usepylon.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 16,
+  "app": "LiveAgent",
+  "category_given": "Support and Helpdesk",
+  "hint": "liveagent.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "liveagent",
+  "composio_category": "customer support",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "LiveAgent is a web-based live chat and helpdesk software that covers all support channels including email, live chat, call center, contact forms, feedback forms, knowledge base, and social networks.",
+  "evidence_url": "https://composio.dev/toolkits/liveagent"
+ },
+ {
+  "number": 17,
+  "app": "Plain",
+  "category_given": "Support and Helpdesk",
+  "hint": "plain.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "plain",
+  "composio_category": "customer support",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 23,
+  "description": "Plain is a collaborative support platform for B2B support teams, offering a modern, AI-powered interface to consolidate support channels and assist customers efficiently.",
+  "evidence_url": "https://composio.dev/toolkits/plain"
+ },
+ {
+  "number": 18,
+  "app": "Help Scout",
+  "category_given": "Support and Helpdesk",
+  "hint": "helpscout.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "help_scout",
+  "composio_category": "customer support",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 129,
+  "description": "Help Scout provides customer support software with shared inbox, knowledge base, and customer management tools",
+  "evidence_url": "https://composio.dev/toolkits/help_scout"
+ },
+ {
+  "number": 19,
+  "app": "Gorgias",
+  "category_given": "Support and Helpdesk",
+  "hint": "gorgias.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "gorgias",
+  "composio_category": "crm",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2"
+  ],
+  "tool_count": 32,
+  "description": "Gorgias is a helpdesk and live chat platform specializing in e-commerce, offering automated support, order management, and unified customer communication",
+  "evidence_url": "https://composio.dev/toolkits/gorgias"
+ },
+ {
+  "number": 20,
+  "app": "Gladly",
+  "category_given": "Support and Helpdesk",
+  "hint": "gladly.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 21,
+  "app": "Slack",
+  "category_given": "Communications and Messaging",
+  "hint": "slack.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "slack",
+  "composio_category": "team chat",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 167,
+  "description": "Slack is a channel-based messaging platform. With Slack, people can work together more effectively, connect all their software tools and services, and find the information they need to do their best w",
+  "evidence_url": "https://composio.dev/toolkits/slack"
+ },
+ {
+  "number": 22,
+  "app": "Twilio",
+  "category_given": "Communications and Messaging",
+  "hint": "twilio.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "twilio",
+  "composio_category": "communication",
+  "auth_schemes": [
+   "API_KEY",
+   "S2S_OAUTH2"
+  ],
+  "tool_count": 1,
+  "description": "Twilio allows software developers to programmatically make and receive phone calls, send and receive text messages, and perform other communication functions using its web service APIs.",
+  "evidence_url": "https://composio.dev/toolkits/twilio"
+ },
+ {
+  "number": 23,
+  "app": "Zoho Cliq",
+  "category_given": "Communications and Messaging",
+  "hint": "zoho.com/cliq",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "zoho_cliq",
+  "composio_category": "communication",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "Team communication and collaboration platform by Zoho with channels, bots, and integrations",
+  "evidence_url": "https://composio.dev/toolkits/zoho_cliq"
+ },
+ {
+  "number": 24,
+  "app": "Lark (Larksuite)",
+  "category_given": "Communications and Messaging",
+  "hint": "open.larksuite.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "lark",
+  "composio_category": "productivity",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "Enterprise collaboration platform with messaging, video conferencing, calendar, and document management",
+  "evidence_url": "https://composio.dev/toolkits/lark"
+ },
+ {
+  "number": 25,
+  "app": "Pumble",
+  "category_given": "Communications and Messaging",
+  "hint": "pumble.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 26,
+  "app": "Discord",
+  "category_given": "Communications and Messaging",
+  "hint": "discord.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "discord",
+  "composio_category": "team chat",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 28,
+  "description": "An instant messaging and VoIP social platform.",
+  "evidence_url": "https://composio.dev/toolkits/discord"
+ },
+ {
+  "number": 27,
+  "app": "Telegram",
+  "category_given": "Communications and Messaging",
+  "hint": "core.telegram.org",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "telegram",
+  "composio_category": "team chat",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 18,
+  "description": "Telegram is a cloud-based messaging app with a focus on security and speed. Build bots to send messages, manage chats, and interact with users.",
+  "evidence_url": "https://composio.dev/toolkits/telegram"
+ },
+ {
+  "number": 28,
+  "app": "WhatsApp Business",
+  "category_given": "Communications and Messaging",
+  "hint": "developers.facebook.com/docs/whatsapp",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "whatsapp",
+  "composio_category": "phone & sms",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 57,
+  "description": "Enables interaction with customers through the WhatsApp Business API for messaging and automation. Only supports WhatsApp Business accounts, not WhatsApp Personal accounts.",
+  "evidence_url": "https://composio.dev/toolkits/whatsapp"
+ },
+ {
+  "number": 29,
+  "app": "Aircall",
+  "category_given": "Communications and Messaging",
+  "hint": "aircall.io",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "aircall",
+  "composio_category": "communication",
+  "auth_schemes": [
+   "OAUTH2",
+   "BASIC"
+  ],
+  "tool_count": 0,
+  "description": "Cloud-based phone system for customer support and sales teams",
+  "evidence_url": "https://composio.dev/toolkits/aircall"
+ },
+ {
+  "number": 30,
+  "app": "Vonage",
+  "category_given": "Communications and Messaging",
+  "hint": "developer.vonage.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 31,
+  "app": "Google Ads",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "developers.google.com/google-ads",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "googleads",
+  "composio_category": "ads & conversion",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 22,
+  "description": "Google Ads, is an online advertising platform developed by Google, where advertisers bid to display brief advertisements, service offerings, product listings, and videos to web users.",
+  "evidence_url": "https://composio.dev/toolkits/googleads"
+ },
+ {
+  "number": 32,
+  "app": "Meta Ads",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "developers.facebook.com/docs/marketing-apis",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "metaads",
+  "composio_category": "ads & conversion",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 52,
+  "description": "Create, edit and get insights from ads across Meta technologies, including Facebook, Instagram, Messenger, WhatsApp and more.",
+  "evidence_url": "https://composio.dev/toolkits/metaads"
+ },
+ {
+  "number": 33,
+  "app": "LinkedIn Ads",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "learn.microsoft.com/linkedin/marketing",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "linkedin",
+  "composio_category": "social media accounts",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 22,
+  "description": "LinkedIn is a professional networking platform enabling job seekers, companies, and thought leaders to connect, share content, and discover business opportunities",
+  "evidence_url": "https://composio.dev/toolkits/linkedin"
+ },
+ {
+  "number": 34,
+  "app": "GoHighLevel",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "highlevel.stoplight.io",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "go_high_level",
+  "composio_category": "marketing",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "All-in-one platform for marketing agencies combining CRM, marketing automation, and client management tools",
+  "evidence_url": "https://composio.dev/toolkits/go_high_level"
+ },
+ {
+  "number": 35,
+  "app": "Mailchimp",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "mailchimp.com/developer",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "mailchimp",
+  "composio_category": "email newsletters",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 275,
+  "description": "Mailchimp is an email marketing and automation platform providing campaign templates, audience segmentation, and performance analytics to drive engagement and conversions",
+  "evidence_url": "https://composio.dev/toolkits/mailchimp"
+ },
+ {
+  "number": 36,
+  "app": "Klaviyo",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "developers.klaviyo.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "klaviyo",
+  "composio_category": "marketing automation",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2"
+  ],
+  "tool_count": 225,
+  "description": "Klaviyo is a data-driven email and SMS marketing platform that allows e-commerce brands to deliver targeted messages, track conversions, and scale customer relationships",
+  "evidence_url": "https://composio.dev/toolkits/klaviyo"
+ },
+ {
+  "number": 37,
+  "app": "systeme.io",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "systeme.io (funnel builder)",
+  "composio_toolkit_found": true,
+  "match_confidence": "fuzzy_needs_check",
+  "composio_slug": "systeme_io",
+  "composio_category": "marketing automation",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "The world's easiest all-in-one marketing platform",
+  "evidence_url": "https://composio.dev/toolkits/systeme_io"
+ },
+ {
+  "number": 38,
+  "app": "Pinterest",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "developers.pinterest.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "pinterest",
+  "composio_category": "social media accounts",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "Pinterest is a visual discovery platform for finding ideas like recipes, home and style inspiration, and more.",
+  "evidence_url": "https://composio.dev/toolkits/pinterest"
+ },
+ {
+  "number": 39,
+  "app": "Threads (Meta)",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "developers.facebook.com/docs/threads",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 40,
+  "app": "SendGrid",
+  "category_given": "Marketing, Ads, Email and Social",
+  "hint": "sendgrid.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "sendgrid",
+  "composio_category": "transactional email",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 364,
+  "description": "SendGrid is a cloud-based email delivery platform providing transactional and marketing email services, with APIs for integration, analytics, and scalability",
+  "evidence_url": "https://composio.dev/toolkits/sendgrid"
+ },
+ {
+  "number": 41,
+  "app": "Shopify",
+  "category_given": "Ecommerce",
+  "hint": "shopify.dev",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "shopify",
+  "composio_category": "ecommerce",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2",
+   "S2S_OAUTH2"
+  ],
+  "tool_count": 407,
+  "description": "Shopify is an e-commerce platform. This toolkit is GraphQL-first for new Admin API automations while retaining legacy REST compatibility actions for older workflows and numeric-ID interoperability",
+  "evidence_url": "https://composio.dev/toolkits/shopify"
+ },
+ {
+  "number": 42,
+  "app": "WooCommerce",
+  "category_given": "Ecommerce",
+  "hint": "woocommerce.com/document/woocommerce-rest-api",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 43,
+  "app": "BigCommerce",
+  "category_given": "Ecommerce",
+  "hint": "developer.bigcommerce.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "bigcommerce",
+  "composio_category": "ecommerce",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "Enterprise e-commerce platform for building and managing online stores",
+  "evidence_url": "https://composio.dev/toolkits/bigcommerce"
+ },
+ {
+  "number": 44,
+  "app": "Salesforce Commerce Cloud",
+  "category_given": "Ecommerce",
+  "hint": "developer.salesforce.com/docs/commerce",
+  "fuzzy_rejected": "fuzzy match to 'salesforce_service_cloud' rejected by hand: different product, not the same company",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 45,
+  "app": "Magento (Adobe Commerce)",
+  "category_given": "Ecommerce",
+  "hint": "developer.adobe.com/commerce",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 46,
+  "app": "Squarespace",
+  "category_given": "Ecommerce",
+  "hint": "developers.squarespace.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "squarespace",
+  "composio_category": "ecommerce",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "Squarespace Commerce API for managing orders, products, inventory, and transactions",
+  "evidence_url": "https://composio.dev/toolkits/squarespace"
+ },
+ {
+  "number": 47,
+  "app": "Ecwid",
+  "category_given": "Ecommerce",
+  "hint": "api-docs.ecwid.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 48,
+  "app": "Gumroad",
+  "category_given": "Ecommerce",
+  "hint": "gumroad.com/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "gumroad",
+  "composio_category": "ecommerce",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 7,
+  "description": "Gumroad simplifies selling digital goods, physical products, and memberships by offering a streamlined checkout, marketing tools, and direct payout options",
+  "evidence_url": "https://composio.dev/toolkits/gumroad"
+ },
+ {
+  "number": 49,
+  "app": "Amazon Selling Partner",
+  "category_given": "Ecommerce",
+  "hint": "developer-docs.amazon.com/sp-api",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 50,
+  "app": "fanbasis",
+  "category_given": "Ecommerce",
+  "hint": "fanbasis.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 51,
+  "app": "DataForSEO",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "docs.dataforseo.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "dataforseo",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "BASIC"
+  ],
+  "tool_count": 312,
+  "description": "SEO data and analytics platform providing SERP data, backlinks, keywords, and competitive intelligence",
+  "evidence_url": "https://composio.dev/toolkits/dataforseo"
+ },
+ {
+  "number": 52,
+  "app": "SE Ranking",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "seranking.com/api",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 53,
+  "app": "Ahrefs",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "ahrefs.com/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "ahrefs",
+  "composio_category": "marketing automation",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 40,
+  "description": "Ahrefs is an SEO and marketing platform offering site audits, keyword research, content analysis, and competitive insights to improve search rankings and drive organic traffic",
+  "evidence_url": "https://composio.dev/toolkits/ahrefs"
+ },
+ {
+  "number": 54,
+  "app": "MrScraper",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "docs.mrscraper.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 55,
+  "app": "Apify",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "docs.apify.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "apify",
+  "composio_category": "ai web scraping",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 113,
+  "description": "Apify is a platform for building, deploying, and managing web scraping and automation tools, known as Actors.",
+  "evidence_url": "https://composio.dev/toolkits/apify"
+ },
+ {
+  "number": 56,
+  "app": "Firecrawl",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "firecrawl.dev",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "firecrawl",
+  "composio_category": "ai web scraping",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 30,
+  "description": "Firecrawl automates web crawling and data extraction, enabling organizations to gather content, index sites, and gain insights from online sources at scale",
+  "evidence_url": "https://composio.dev/toolkits/firecrawl"
+ },
+ {
+  "number": 57,
+  "app": "Bright Data",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "brightdata.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "brightdata",
+  "composio_category": "ai web scraping",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 10,
+  "description": "Bright Data provides the world's #1 web data platform with Web Unlocker for bypassing anti-bot systems, SERP API for search engine data, and pre-made scrapers for popular websites. Collect any web dat",
+  "evidence_url": "https://composio.dev/toolkits/brightdata"
+ },
+ {
+  "number": 58,
+  "app": "Sherlock",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "github.com/sherlock-project/sherlock",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 59,
+  "app": "Waterfall.io",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "waterfall.io (contact/company intel)",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 60,
+  "app": "Clay",
+  "category_given": "Data, SEO and Scraping",
+  "hint": "clay.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "clay",
+  "composio_category": "marketing",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "Data enrichment and workflow automation platform with People and Company lookup endpoints for Enterprise customers",
+  "evidence_url": "https://composio.dev/toolkits/clay"
+ },
+ {
+  "number": 61,
+  "app": "GitHub",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "docs.github.com/rest",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "github",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 893,
+  "description": "GitHub is a code hosting platform for version control and collaboration, offering Git-based repository management, issue tracking, and continuous integration features",
+  "evidence_url": "https://composio.dev/toolkits/github"
+ },
+ {
+  "number": 62,
+  "app": "Vercel",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "vercel.com/docs/rest-api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "vercel",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 146,
+  "description": "Vercel is a platform for frontend frameworks and static sites, enabling developers to host websites and web services that deploy instantly, scale automatically, and require minimal configuration.",
+  "evidence_url": "https://composio.dev/toolkits/vercel"
+ },
+ {
+  "number": 63,
+  "app": "Netlify",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "docs.netlify.com/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "netlify",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "Cloud platform for web development with continuous deployment and serverless functions",
+  "evidence_url": "https://composio.dev/toolkits/netlify"
+ },
+ {
+  "number": 64,
+  "app": "Cloudflare",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "developers.cloudflare.com/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "cloudflare",
+  "composio_category": "security & identity tools",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 20,
+  "description": "Cloudflare is a global network designed to make everything you connect to the Internet secure, private, fast, and reliable.",
+  "evidence_url": "https://composio.dev/toolkits/cloudflare"
+ },
+ {
+  "number": 65,
+  "app": "Supabase",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "supabase.com/docs",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "supabase",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 129,
+  "description": "Supabase is an open-source backend-as-a-service providing a Postgres database, authentication, storage, and real-time subscription APIs for building modern applications",
+  "evidence_url": "https://composio.dev/toolkits/supabase"
+ },
+ {
+  "number": 66,
+  "app": "Neo4j",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "neo4j.com/docs/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "neo4j",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "OAUTH2",
+   "BASIC",
+   "API_KEY",
+   "S2S_OAUTH2"
+  ],
+  "tool_count": 21,
+  "description": "Graph database platform for connected data and real-time analytics",
+  "evidence_url": "https://composio.dev/toolkits/neo4j"
+ },
+ {
+  "number": 67,
+  "app": "Snowflake",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "docs.snowflake.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "snowflake",
+  "composio_category": "databases",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 17,
+  "description": "Snowflake is a cloud-based data warehouse offering elastic scaling, secure data sharing, and SQL analytics across multiple cloud environments",
+  "evidence_url": "https://composio.dev/toolkits/snowflake"
+ },
+ {
+  "number": 68,
+  "app": "MongoDB Atlas",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "mongodb.com/docs/atlas/api",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 69,
+  "app": "Datadog",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "docs.datadoghq.com/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "datadog",
+  "composio_category": "server monitoring",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 43,
+  "description": "Datadog offers monitoring, observability, and security for cloud-scale applications, unifying metrics, logs, and traces to help teams detect issues and optimize performance",
+  "evidence_url": "https://composio.dev/toolkits/datadog"
+ },
+ {
+  "number": 70,
+  "app": "Sentry",
+  "category_given": "Developer, Infra and Data platforms",
+  "hint": "docs.sentry.io/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "sentry",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 211,
+  "description": "Integrate Sentry to manage your error tracking and monitoring.",
+  "evidence_url": "https://composio.dev/toolkits/sentry"
+ },
+ {
+  "number": 71,
+  "app": "Notion",
+  "category_given": "Productivity and Project Management",
+  "hint": "developers.notion.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "notion",
+  "composio_category": "notes",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 48,
+  "description": "Notion centralizes notes, docs, wikis, and tasks in a unified workspace, letting teams build custom workflows for collaboration and knowledge management",
+  "evidence_url": "https://composio.dev/toolkits/notion"
+ },
+ {
+  "number": 72,
+  "app": "Airtable",
+  "category_given": "Productivity and Project Management",
+  "hint": "airtable.com/developers",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "airtable",
+  "composio_category": "productivity",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 26,
+  "description": "Airtable merges spreadsheet functionality with database power, enabling teams to organize projects, track tasks, and collaborate through customizable views, automation, and integrations for data manag",
+  "evidence_url": "https://composio.dev/toolkits/airtable"
+ },
+ {
+  "number": 73,
+  "app": "Linear",
+  "category_given": "Productivity and Project Management",
+  "hint": "developers.linear.app",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "linear",
+  "composio_category": "project management",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 47,
+  "description": "Linear is a streamlined issue tracking and project planning tool for modern teams, featuring fast workflows, keyboard shortcuts, and GitHub integrations",
+  "evidence_url": "https://composio.dev/toolkits/linear"
+ },
+ {
+  "number": 74,
+  "app": "Jira",
+  "category_given": "Productivity and Project Management",
+  "hint": "developer.atlassian.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "jira",
+  "composio_category": "project management",
+  "auth_schemes": [
+   "OAUTH2",
+   "S2S_OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 102,
+  "description": "A tool for bug tracking, issue tracking, and agile project management.",
+  "evidence_url": "https://composio.dev/toolkits/jira"
+ },
+ {
+  "number": 75,
+  "app": "Asana",
+  "category_given": "Productivity and Project Management",
+  "hint": "developers.asana.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "asana",
+  "composio_category": "project management",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 153,
+  "description": "Tool to help teams organize, track, and manage their work.",
+  "evidence_url": "https://composio.dev/toolkits/asana"
+ },
+ {
+  "number": 76,
+  "app": "Monday.com",
+  "category_given": "Productivity and Project Management",
+  "hint": "developer.monday.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "monday",
+  "composio_category": "project management",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 125,
+  "description": "monday.com is a customizable work management platform for project planning, collaboration, and automation, supporting agile, sales, marketing, and more",
+  "evidence_url": "https://composio.dev/toolkits/monday"
+ },
+ {
+  "number": 77,
+  "app": "ClickUp",
+  "category_given": "Productivity and Project Management",
+  "hint": "clickup.com/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "clickup",
+  "composio_category": "productivity",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 164,
+  "description": "ClickUp unifies tasks, docs, goals, and chat in a single platform, allowing teams to plan, organize, and collaborate across projects with customizable workflows",
+  "evidence_url": "https://composio.dev/toolkits/clickup"
+ },
+ {
+  "number": 78,
+  "app": "Coda",
+  "category_given": "Productivity and Project Management",
+  "hint": "coda.io/developers",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "coda",
+  "composio_category": "productivity",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 110,
+  "description": "Collaborative workspace platform that transforms documents into powerful tools for team productivity and project management",
+  "evidence_url": "https://composio.dev/toolkits/coda"
+ },
+ {
+  "number": 79,
+  "app": "Smartsheet",
+  "category_given": "Productivity and Project Management",
+  "hint": "smartsheet.com/developers",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 80,
+  "app": "Harvest",
+  "category_given": "Productivity and Project Management",
+  "hint": "harvestapp.com (help.getharvest.com/api-v2)",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "harvest",
+  "composio_category": "time tracking software",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 57,
+  "description": "Harvest is a time-tracking and invoicing tool designed for teams and freelancers, helping them log billable hours, manage projects, and streamline payments",
+  "evidence_url": "https://composio.dev/toolkits/harvest"
+ },
+ {
+  "number": 81,
+  "app": "Stripe",
+  "category_given": "Finance and Fintech",
+  "hint": "stripe.com/docs/api",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "stripe",
+  "composio_category": "payment processing",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2"
+  ],
+  "tool_count": 432,
+  "description": "Stripe offers online payment infrastructure, fraud prevention, and APIs enabling businesses to accept and manage payments globally",
+  "evidence_url": "https://composio.dev/toolkits/stripe"
+ },
+ {
+  "number": 82,
+  "app": "Plaid",
+  "category_given": "Finance and Fintech",
+  "hint": "plaid.com/docs",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "plaid",
+  "composio_category": "commerce",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "Plaid provides financial data aggregation and banking APIs for applications to connect with users' bank accounts",
+  "evidence_url": "https://composio.dev/toolkits/plaid"
+ },
+ {
+  "number": 83,
+  "app": "Binance",
+  "category_given": "Finance and Fintech",
+  "hint": "binance-docs.github.io",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 84,
+  "app": "Paygent Connect",
+  "category_given": "Finance and Fintech",
+  "hint": "paygent (NMI-powered)",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 85,
+  "app": "iPayX",
+  "category_given": "Finance and Fintech",
+  "hint": "ipayx.ai/docs",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 86,
+  "app": "QuickBooks",
+  "category_given": "Finance and Fintech",
+  "hint": "developer.intuit.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "quickbooks",
+  "composio_category": "accounting",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 114,
+  "description": "Quickbooks is a cloud-based accounting software that helps you manage your finances, track your income and expenses, and get insights into your business",
+  "evidence_url": "https://composio.dev/toolkits/quickbooks"
+ },
+ {
+  "number": 87,
+  "app": "Xero",
+  "category_given": "Finance and Fintech",
+  "hint": "developer.xero.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "xero",
+  "composio_category": "accounting",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 53,
+  "description": "Xero is a cloud-based accounting software for small businesses, providing invoicing, bank reconciliation, bookkeeping, and financial reporting in real time",
+  "evidence_url": "https://composio.dev/toolkits/xero"
+ },
+ {
+  "number": 88,
+  "app": "Brex",
+  "category_given": "Finance and Fintech",
+  "hint": "developer.brex.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "brex",
+  "composio_category": "accounting",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 84,
+  "description": "Brex provides corporate credit cards, spend management, and financial tools tailored for startups and tech businesses to optimize cash flow, accounting, and growth",
+  "evidence_url": "https://composio.dev/toolkits/brex"
+ },
+ {
+  "number": 89,
+  "app": "Ramp",
+  "category_given": "Finance and Fintech",
+  "hint": "docs.ramp.com",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "ramp",
+  "composio_category": "accounting",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 88,
+  "description": "Ramp is a platform that helps you manage your finances, track your income and expenses, and get insights into your business",
+  "evidence_url": "https://composio.dev/toolkits/ramp"
+ },
+ {
+  "number": 90,
+  "app": "PitchBook",
+  "category_given": "Finance and Fintech",
+  "hint": "pitchbook.com (research API)",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 91,
+  "app": "NotebookLM",
+  "category_given": "AI, Research and Media-native",
+  "hint": "cloud.google.com/gemini (Enterprise API)",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "google_notebooklm",
+  "composio_category": "productivity",
+  "auth_schemes": [
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "Google NotebookLM Enterprise API for managing AI-powered notebooks and research sources",
+  "evidence_url": "https://composio.dev/toolkits/google_notebooklm"
+ },
+ {
+  "number": 92,
+  "app": "Otter AI",
+  "category_given": "AI, Research and Media-native",
+  "hint": "help.otter.ai (MCP server)",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 93,
+  "app": "Fathom",
+  "category_given": "AI, Research and Media-native",
+  "hint": "fathom.video",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "fathom",
+  "composio_category": "ai meeting assistants",
+  "auth_schemes": [
+   "OAUTH2",
+   "API_KEY"
+  ],
+  "tool_count": 7,
+  "description": "AI meeting assistant that records, transcribes, and summarizes meetings",
+  "evidence_url": "https://composio.dev/toolkits/fathom"
+ },
+ {
+  "number": 94,
+  "app": "Consensus",
+  "category_given": "AI, Research and Media-native",
+  "hint": "consensus.app (OAuth requested)",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 95,
+  "app": "Reducto",
+  "category_given": "AI, Research and Media-native",
+  "hint": "reducto.ai (document parsing)",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "reducto",
+  "composio_category": "developer tools",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 0,
+  "description": "Document parsing and extraction API that converts documents into structured data",
+  "evidence_url": "https://composio.dev/toolkits/reducto"
+ },
+ {
+  "number": 96,
+  "app": "Devin",
+  "category_given": "AI, Research and Media-native",
+  "hint": "docs.devin.ai (MCP)",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 97,
+  "app": "higgsfield",
+  "category_given": "AI, Research and Media-native",
+  "hint": "higgsfield.ai/cli (content suite)",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "higgsfield",
+  "composio_category": "artificial intelligence",
+  "auth_schemes": [
+   "API_KEY"
+  ],
+  "tool_count": 3,
+  "description": "AI-powered video generation platform for creating high-quality videos from text and images",
+  "evidence_url": "https://composio.dev/toolkits/higgsfield"
+ },
+ {
+  "number": 98,
+  "app": "Mermaid CLI",
+  "category_given": "AI, Research and Media-native",
+  "hint": "github.com/mermaid-js/mermaid-cli",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 99,
+  "app": "YouTube Transcript",
+  "category_given": "AI, Research and Media-native",
+  "hint": "transcriptapi.com",
+  "composio_toolkit_found": false,
+  "match_confidence": null
+ },
+ {
+  "number": 100,
+  "app": "Grain",
+  "category_given": "AI, Research and Media-native",
+  "hint": "grain.com (meeting notes)",
+  "composio_toolkit_found": true,
+  "match_confidence": "exact",
+  "composio_slug": "grain",
+  "composio_category": "productivity",
+  "auth_schemes": [
+   "API_KEY",
+   "OAUTH2"
+  ],
+  "tool_count": 0,
+  "description": "AI-powered meeting recording and note-taking platform for teams",
+  "evidence_url": "https://composio.dev/toolkits/grain"
+ }
+]
