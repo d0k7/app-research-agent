@@ -1,6 +1,6 @@
 # Composio 100-app research agent
 
-Research pipeline for the AI Product Ops Intern take-home: for each of the 100 apps
+Research pipeline for the AI Product for each of the 100 apps
 in the assignment, determine category, auth method(s), self-serve vs gated access,
 API surface, MCP existence, and a buildability verdict, with evidence for each.
 
