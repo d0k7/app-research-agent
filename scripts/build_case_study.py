@@ -317,6 +317,7 @@ def main():
     </div>
     <div class="card">
       <h2>Verification Notes</h2>
+      <p><b>Accuracy movement:</b> the automated run produced 82 usable rows; verification brought coverage to 100/100 and corrected the highest-risk failure mode: wrong product identity.</p>
       <p><b>Copper:</b> rejected a fuzzy match to Copperx, which is a different product.</p>
       <p><b>Salesforce Commerce Cloud:</b> kept separate from generic Salesforce and Service Cloud.</p>
       <p><b>NotebookLM:</b> recovered a first-pass false negative by adding the Composio alias <code>google_notebooklm</code>.</p>
